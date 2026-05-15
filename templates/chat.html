@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat</title>
+</head>
+<body>
+
+<script>
+if (!localStorage.getItem("access")) {
+    window.location.href = "/chat/login/";
+}
+</script>
+
+<h2>AI Chat</h2>
+
+<div id="chat"></div>
+
+<input id="prompt" placeholder="Write message..." />
+<button onclick="sendPrompt()">Send</button>
+
+<br><br><br>
+<button onclick="logout()">Logout</button>
+
+<script src="/static/app.js"></script>
+
+</body>
+</html>

@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -76,3 +77,15 @@ class PromptStatusView(APIView):
                 "error": job.error,
             }
         )
+
+
+def login_page(request):
+    return render(request, "login.html")
+
+
+def chat_page(request):
+    return render(request, "chat.html")
+
+
+def register_page(request):
+    return render(request, "register.html")
