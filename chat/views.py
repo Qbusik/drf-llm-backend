@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -8,6 +9,21 @@ from .tasks import process_prompt
 
 class PromptView(APIView):
 
+    @extend_schema(
+        request=PromptSerializer,
+        responses={
+            200: {
+                "type": "object",
+                "properties": {
+                    "job_id": {"type": "string"},
+                    "status": {"type": "string"},
+                },
+            }
+        },
+        summary="Create LLM prompt job",
+        description="Creates async LLM job and returns job_id",
+        tags=["LLM"],
+    )
     def post(self, request):
 
         serializer = PromptSerializer(data=request.data)
@@ -25,6 +41,29 @@ class PromptView(APIView):
 
 class PromptStatusView(APIView):
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name="job_id",
+                type=str,
+                location=OpenApiParameter.PATH,
+                description="ID of the LLM job",
+            )
+        ],
+        responses={
+            200: {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "string"},
+                    "status": {"type": "string"},
+                    "response": {"type": "string", "nullable": True},
+                    "error": {"type": "string", "nullable": True},
+                },
+            }
+        },
+        summary="Get LLM job status",
+        tags=["LLM"],
+    )
     def get(self, request, job_id):
 
         job = PromptJob.objects.get(id=job_id)

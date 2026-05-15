@@ -35,7 +35,7 @@ services:
   celery_worker:
     build: .
     container_name: celery_worker
-    command: celery -A drf_user_api worker --loglevel=info --pool=solo
+    command: celery -A drf_llm_backend worker --loglevel=info --pool=solo
     volumes:
       - .:/app
     depends_on:
