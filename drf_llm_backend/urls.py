@@ -11,6 +11,7 @@ from rest_framework.permissions import AllowAny
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("user/", include("user.urls", namespace="user")),
+    path("chat/", include("chat.urls", namespace="chat")),
     path(
         "doc/", SpectacularAPIView.as_view(permission_classes=[AllowAny]), name="schema"
     ),
