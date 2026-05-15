@@ -13,8 +13,6 @@ class PromptJob(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    prompt = models.TextField()
-
     response = models.TextField(null=True, blank=True)
 
     error = models.TextField(null=True, blank=True)

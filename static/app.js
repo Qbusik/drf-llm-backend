@@ -16,7 +16,9 @@ async function sendPrompt() {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify({ prompt })
+        body: JSON.stringify({
+            messages: chatHistory
+        })
     });
 
     const data = await res.json();

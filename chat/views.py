@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from drf_spectacular.utils import extend_schema, OpenApiParameter
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -16,26 +16,43 @@ class PromptView(APIView):
             200: {
                 "type": "object",
                 "properties": {
-                    "job_id": {"type": "string"},
+                    "job_id": {"type": "string", "format": "uuid"},
                     "status": {"type": "string"},
                 },
             }
         },
+        examples=[
+            OpenApiExample(
+                "Chat request example",
+                value={
+                    "messages": [
+                        {"role": "user", "content": "Hello"},
+                        {"role": "assistant", "content": "Hi! How can I help?"},
+                    ]
+                },
+                request_only=True,
+            )
+        ],
         summary="Create LLM prompt job",
-        description="Creates async LLM job and returns job_id",
+        description=(
+            "Creates async LLM job.\n\n"
+            "IMPORTANT:\n"
+            "- You must send `messages` as a list of objects\n"
+            "- Each message must contain: role + content\n"
+            "- Supported roles: user, assistant\n"
+        ),
         tags=["LLM"],
     )
     def post(self, request):
 
         serializer = PromptSerializer(data=request.data)
-
         serializer.is_valid(raise_exception=True)
 
-        prompt = serializer.validated_data["prompt"]
+        messages = serializer.validated_data["messages"]
 
-        job = PromptJob.objects.create(prompt=prompt)
+        job = PromptJob.objects.create(status="PENDING")
 
-        process_prompt.delay(str(job.id))
+        process_prompt.delay(str(job.id), messages)
 
         return Response({"job_id": job.id, "status": job.status})
 
