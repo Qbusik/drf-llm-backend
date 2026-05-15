@@ -1,6 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
+from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from user.serializers import UserSerializer, LogoutSerializer
@@ -25,6 +26,13 @@ class LogoutView(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        token = RefreshToken(serializer.validated_data["refresh"])
-        token.blacklist()
+        try:
+            token = RefreshToken(serializer.validated_data["refresh"])
+            token.blacklist()
+        except TokenError:
+            return Response(
+                {"detail": "Token is invalid or already blacklisted"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         return Response(status=status.HTTP_204_NO_CONTENT)
