@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "drf_spectacular",
+    "drf_llm_backend",
     "user",
     "chat",
 ]
@@ -72,8 +73,8 @@ DATABASES = {
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-CELERY_BROKER_URL = "redis://localhost:6379/0"
-CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+CELERY_BROKER_URL = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://redis:6379/0"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
