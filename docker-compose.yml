@@ -37,7 +37,6 @@ services:
     command: celery -A drf_llm_backend worker --loglevel=info --pool=solo
     volumes:
       - .:/app
-      - static_volume:/app/staticfiles
     depends_on:
       - redis
       - db
