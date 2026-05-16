@@ -2,6 +2,9 @@ services:
   web:
     build: .
     container_name: drf_llm_backend
+    volumes:
+      - ./:/app
+      - static_volume:/app/staticfiles
     command: >
       sh -c "python manage.py wait_for_db &&
              python manage.py migrate &&
@@ -37,6 +40,7 @@ services:
     command: celery -A drf_llm_backend worker --loglevel=info --pool=solo
     volumes:
       - .:/app
+      - static_volume:/app/staticfiles
     depends_on:
       - redis
       - db
@@ -45,3 +49,4 @@ services:
 
 volumes:
   postgres_db:
+  static_volume:
