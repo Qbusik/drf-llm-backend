@@ -14,6 +14,7 @@ The project provides authentication, asynchronous processing with Celery, and a 
 - 🌐 Simple HTML frontend (login + chat interface)
 - 📡 REST API endpoints for integration
 - 🧠 Chat history handled on frontend side
+- 🚦 Rate limiting (throttling) applied to LLM requests to prevent API overuse and control request frequency
 
 ---
 
