@@ -3,12 +3,15 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExampl
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from drf_llm_backend.throttles import LLMRateThrottle
 from .models import PromptJob
 from .serializers import PromptSerializer
 from .tasks import process_prompt
 
 
 class PromptView(APIView):
+
+    throttle_classes = [LLMRateThrottle]
 
     @extend_schema(
         request=PromptSerializer,
