@@ -21,6 +21,14 @@ async function sendPrompt() {
         })
     });
 
+    if (res.status === 429) {
+        alert("You have exceeded the request limit. Please try again in a moment.");
+
+        chatHistory.pop();
+
+        return;
+    }
+
     const data = await res.json();
 
     const jobId = data.job_id;
