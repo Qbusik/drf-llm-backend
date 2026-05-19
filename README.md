@@ -7,20 +7,29 @@ The project provides authentication, asynchronous processing with Celery, and a 
 
 ## 📃 Features
 
-- 🔐 JWT Authentication
-- 💬 Chat with LLM (Gemini API integration)
-- ⚙️ Asynchronous processing using Celery
-- 📊 Job status tracking (PENDING / DONE / FAILED)
-- 🌐 Simple HTML frontend (login + chat interface)
-- 📡 REST API endpoints for integration
-- 🧠 Chat history handled on frontend side
-- 🚦 Rate limiting (throttling) applied to LLM requests to prevent API overuse and control request frequency
+- JWT Authentication (SimpleJWT)
+- Chat with LLM (Google Gemini API)
+- Asynchronous processing with Celery + Redis
+- Job tracking (PENDING / SUCCESS / FAILED)
+- REST API for integration with external clients
+- Simple frontend for testing authentication and chat
+- Rate limiting (throttling) for LLM requests
+
+---
+
+## 🧱 Tech Stack
+
+- Python 3.12
+- Django + Django REST Framework
+- Celery
+- Redis
+- PostgreSQL
+- Gunicorn
+- Docker + Docker Compose
 
 ---
 
 ## 🚀 Run with DOCKER
-
-This is the fastest method to get the project running in an isolated environment.
 
 1.  **Clone the repository:**
     ```bash
@@ -38,4 +47,3 @@ This is the fastest method to get the project running in an isolated environment
     ```bash
     docker-compose up --build
     ```
-    The application will be available at: `http://localhost:8000/`
