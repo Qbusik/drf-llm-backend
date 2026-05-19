@@ -23,4 +23,8 @@ RUN adduser \
     --no-create-home \
     django-user
 
+RUN mkdir -p /app/staticfiles && \
+    chown django-user /app/staticfiles && \
+    chmod 775 /app/staticfiles
+
 USER django-user
